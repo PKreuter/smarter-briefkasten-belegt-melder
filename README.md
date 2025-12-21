@@ -63,9 +63,10 @@ Fuer den Node gibt es zwei Auspraegungen an Code
 
 Beispiel Messages as JSON
 
+```
 Message: "node":"0xA2","msg_num":3557,"temperature":2,"humidity":63,"sensor_value":0,"sensor_state":"false","vbattery":4.393231,"wakeup_reason":4
 Message: "node":"0xA2","msg_num":3558,"temperature":2,"humidity":63,"sensor_value":1,"sensor_state":"true","vbattery":4.394562,"wakeup_reason":4
-
+```
 
 <br>
 
