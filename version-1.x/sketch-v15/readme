@@ -1,0 +1,16 @@
+Version 1.5
+- LoRa Node(s) based on TTGO LoRa32 OLED
+- LoRa Gateway based on ESP32C6-8N with SX1262 
+
+Gateway Hardware 
+* ESP32C6 Dev Module
+* SX1262
+* OLED SSD1306
+
+Software
+* AESlib (as deprecated)
+* Mbedtls AES-CBC
+* RadioLib for LoRa
+
+
+

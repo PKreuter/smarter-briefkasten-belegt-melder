@@ -1,0 +1,31 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0" version="29.2.9">
+  <diagram name="Page-1" id="55a83fd1-7818-8e21-69c5-c3457e3827bb">
+    <mxGraphModel dx="2066" dy="1055" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-1" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.comm_link;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="242" width="30" x="376" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-8" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.wireless_modem;fontSize=16;" value="LoRa Node" vertex="1">
+          <mxGeometry height="85" width="100" x="150" y="347.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-11" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.wireless_modem;fontSize=16;" value="LoRa Gateway" vertex="1">
+          <mxGeometry height="85" width="100" x="480" y="347.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="LoRa WAN" vertex="1">
+          <mxGeometry height="30" width="170" x="306" y="308" as="geometry" />
+        </mxCell>
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-14" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.web_server;" value="&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;MQTT Server&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;font&gt;Homeassistant&lt;/font&gt;&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="105" width="105" x="858" y="304.5" as="geometry" />
+        </mxCell>
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-15" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.comm_link;rotation=-90;" value="" vertex="1">
+          <mxGeometry height="242" width="30" x="700" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="Mkj5ovS8_ijaxdag56x0-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;" value="WiFi" vertex="1">
+          <mxGeometry height="30" width="170" x="650" y="305" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,153 @@
+{
+  "uuid": "12c2a847228b619df0f4e9437fb9063d",
+  "path": "Offline/LilyGo-LoRa32",
+  "name": "LilyGo-LoRa32",
+  "content": "",
+  "created_at": "2024-10-25 10:04:13",
+  "updated_at": "2024-10-25 10:04:13",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "45c47bca3a334c0f9467876fd4774137",
+      "title": "Sheet_1",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "507d447aecb04028a4ed8de4625389c9": 1,
+        "bb009484ef804a24ac5d18c54b249586": 7,
+        "e33cc1be9d5e4d929dda60b4eb023d72": 2,
+        "82703e71e7e045d592e99c1debf679e9": 1,
+        "5cbe824183374fac8e4c1ae848199ce3": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "1N4007W",
+          2,
+          "SOD-123_L2.8-W1.8-LS3.7-RD",
+          "D1,D2",
+          {
+            "Manufacturer Part": "1N4007W",
+            "Manufacturer": "BLUE ROCKET",
+            "Supplier": "LCSC",
+            "Supplier Part": "C328592"
+          }
+        ],
+        [
+          "LED-0603_R",
+          1,
+          "LED0603_RED",
+          "LED2",
+          {
+            "Manufacturer Part": "19-217/R6C-AL1M2VY/3T",
+            "Manufacturer": "EVERLIGHT(台湾亿光)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C72044"
+          }
+        ],
+        [
+          "IRLZ44ZPBF",
+          1,
+          "TO-220-3_L10.0-W4.5-P2.54-L",
+          "Q2",
+          {
+            "Manufacturer Part": "IRLZ44ZPBF",
+            "Manufacturer": "Infineon(英飞凌)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C538200"
+          }
+        ],
+        [
+          "47K",
+          2,
+          "R0603",
+          "R1,R5",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "220",
+          1,
+          "R0603",
+          "R2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "10k",
+          2,
+          "R0603",
+          "R3,R4",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "47k",
+          1,
+          "R0603",
+          "R6",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "2,2K",
+          1,
+          "R0603",
+          "R8",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "Wakeup press-button",
+          1,
+          "KEY-TH_CPG1511F01S0X",
+          "SW1",
+          {
+            "Manufacturer Part": "CPG1511F01S05",
+            "Manufacturer": "Kailh(凯华)",
+            "Supplier": "LCSC",
+            "Supplier Part": "C400225"
+          }
+        ]
+      ],
+      "updateTime": 1729843453,
+      "createTime": 1729843453,
+      "histories": [],
+      "created_at": "2024-10-25 10:04:13",
+      "updated_at": "2024-10-25 10:04:13"
+    }
+  ],
+  "sort": [],
+  "title": "LilyGo-LoRa32",
+  "foldername": "LilyGo-LoRa32",
+  "schfilename": "LilyGo-LoRa32.json",
+  "schfilemtime": 1729843453990
+}

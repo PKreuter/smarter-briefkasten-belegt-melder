@@ -1,0 +1,8 @@
+Version 1
+- LoRa Node(s) based on TTGO LoRa32 OLED
+- LoRa Gateway based on TTGO LoRa32 OLED 
+
+Based on LilyGo TTGO LoRa32 OLED, due memory limitation with a minimal feature set
+
+- AESlib
+- LoRa as Radio
