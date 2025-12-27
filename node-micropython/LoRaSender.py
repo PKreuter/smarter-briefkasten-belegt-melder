@@ -4,36 +4,35 @@ from machine import Pin, SoftI2C, ADC
 from machine import deepsleep, wake_reason, reset_cause
 
 import ujson
-import logging
-
 from time import sleep
-#import json
 
-import mpyaes
+import myaes as myaes
 import ubinascii
-#import uos
-#from ucryptolib import aes
 
 import dht
+
+from lib import logging
+import config.config as config
+import config.secrets as secrets
 
 # store in flash
 rtc = machine.RTC()
 
-buttonPIN = Pin(4, mode = Pin.IN)
-mosfetPIN = Pin(14, mode = Pin.OUT, value=0)
-ledPIN = Pin(25, mode = Pin.OUT, value=0)
-
-
-
-
 log = logging.getLogger(__name__)
-debug = Pin(39, mode = Pin.IN)
-log.setLevel(logging.INFO)
-if debug.value(): 
-    log.setLevel(logging.DEBUG)
 
 
+# PINs
+sensorPIN = Pin(4, mode=Pin.IN)                   # sensor
+greenLedPIN = Pin(25, mode=Pin.OUT, value=0)      # green onboard led, lora send indicator 
+outDriverPIN = Pin(14, mode=Pin.OUT, value=0)
 
+# Sleep Pins
+sleep1PIN = Pin(2, mode=Pin.IN, pull=Pin.PULL_DOWN)
+sleep2PIN = Pin(39, mode=Pin.IN)
+
+# DHT22
+dhtPIN=Pin(15, mode=Pin.IN)
+d = dht.DHT22(dhtPIN)
 
 # VBAT Analog Readings
 pot = ADC(Pin(35))
@@ -45,19 +44,7 @@ pot.atten(ADC.ATTN_11DB)
     ADC.ATTN_11DB — the full range voltage: 3.3V
 """
 
-# Sleep Pins
-""" Matrix
-   off  off  = no sleep
-   on   off  = 1min
-   off  on   = 5min
-   on   of   = 15min
-"""
-sleep1PIN = Pin(13, mode = Pin.IN)
-sleep2PIN = Pin(36, mode = Pin.IN)
-
-# DHT22
-dhtPIN=Pin(15, mode= Pin.IN)
-d = dht.DHT22(dhtPIN)
+### end 
 
 
 
@@ -74,6 +61,7 @@ def measure():
         return (0, 0, "false")
 
 
+
 def vbat():
     """Internal Power"""
     vbat_value = pot.read()
@@ -82,45 +70,49 @@ def vbat():
     return (float)(vbat_volts)
 
 
+
 def sensor():
     """Sensor Digital high/low"""
-    sensor_value = buttonPIN.value()
+    sensor_value = sensorPIN.value()
     sensor_state = "false"
     if sensor_value == 1:
         sensor_state = "true"
-    log.info("Sensor value %s - state %s", sensor_value, sensor_state)
+    log.info("Sensor Pin: %s=%s, state %s", sensorPIN, sensor_value, sensor_state)
     return (sensor_value, sensor_state)
 
 
+
 def sleepMode():
-    """"""
+    """ Matrix
+     off  off  = 5 min
+     on   off  = 10 sec
+     off  on   = 60 sec
+     on   on   = 15min
+    """
     sleep1_value = sleep1PIN.value()
     sleep2_value = sleep2PIN.value()
-    if sleep1_value == 1 and sleep2_value == 0:
-        log.debug("Sleep Mode 60 secs")
-        return 60
-    elif sleep1_value == 0 and sleep2_value == 1:
-        log.debug("Sleep Mode 300 secs")
-        return 300
-    elif sleep1_value == 1 and sleep2_value == 1:
-        log.debug("Sleep Mode 900 secs")
+    log.debug("Sleep Pin: %s=%s, %s=%s", sleep1PIN, sleep1PIN.value(), sleep2PIN, sleep2PIN.value())
+    if sleep1_value == 0 and sleep2_value == 0:
         return 900
+    elif sleep1_value == 1 and sleep2_value == 0:
+        return 300
+    elif sleep1_value == 0 and sleep2_value == 1:
+        return 60
+    elif sleep1_value == 1 and sleep2_value == 1:
+        return 10
     else:
-        log.debug("No Sleep")
-        return 0
-
-
+        return 10
 
 
 
 def encrypt(plain):
     """"""
-    key = '1234567890123456'
-    iv = '1234567890123456'
+    key = secrets.aes_key
+    iv = secrets.aes_iv
 
     log.debug("Using AES%s-CBC cipher", (len(key * 8)))
 
-    cipher = mpyaes.new(key,mpyaes.MODE_CBC,iv)
+    cipher = myaes.new(key,myaes.MODE_CBC,iv)
     ct_bytes = cipher.encrypt(plain)
 
     #print(type(ct_bytes))
@@ -157,18 +149,12 @@ def process(display, lora):
     rtc.memory(ujson.dumps(d))  
 
 
-    #while True:
+    temperature_value, humidity_value, state = measure()
 
-    if 1 == 1:
+    sensor_value, sensor_state = sensor()
 
-        ledPIN(1)
-
-        temperature_value, humidity_value, state = measure()
-
-        sensor_value, sensor_state = sensor()
-
-        dictionary = { 
-                "node": "0xA9",
+    dictionary = { 
+                "node": config.node_id,
                 "msg_num": counter,
                 "temperature": temperature_value,
                 "humidity": humidity_value,
@@ -178,46 +164,33 @@ def process(display, lora):
                 "wakeup_reason": wake_reason()
             }
 
-        # for testing     
-        xdictionary = {
-                      "vbattery": 4.396777, 
-                      "temperature": 23.6, 
-                      "wakeup_reason": 4, 
-                      "sensor_state": "false", 
-                      "humidity": 32.5, 
-                      "node": "0xA9", 
-                      "msg_num": 1, 
-                      "sensor_value": 0}
- 
-        display.text('Sensor:  {}'.format(sensor_value), 0, 20) # Text, X, Y
-        display.text('Tempera: {}'.format(temperature_value), 0, 30) # Text, X, Y
-        display.text('Luftfkt: {}'.format(humidity_value), 0, 40) # Text, X, Y
-        display.show()
+    display.text('Sensor:  {}'.format(sensor_value), 0, 20) # Text, X, Y
+    display.text('Tempera: {}'.format(temperature_value), 0, 30) # Text, X, Y
+    display.text('Luftfkt: {}'.format(humidity_value), 0, 40) # Text, X, Y
+    display.show()
 
-        # Convert dictionary to JSON string
-        json_string = ujson.dumps(dictionary)
+    # Convert dictionary to JSON string
+    json_string = ujson.dumps(dictionary)
+    log.debug('PLAIN: %s', json_string)
         
-        # send as plain
-        #log.debug("send as plain")
-
-        # encrypt / encode base64
-        enc = encrypt(json_string)
-        log.debug('BASE64: %s', enc)
-        enc = enc.strip()
-        log.debug("send as encrypted---")
-        lora.println(enc)
-
-        ledPIN(0)
-
-        ### END
+    # encrypt / encode base64
+    enc = encrypt(json_string)
+    log.debug('BASE64: %s', enc)
+    enc = enc.strip()
+        
+    log.info("send as encrypted---")
+    greenLedPIN.on()
+    lora.println(enc)
+    greenLedPIN.off()
  
+
 
 def gotoSleep(display):
     """"""
     # get sleep mode
     sleep_ms = sleepMode() * 1000
 
-    log.info("send, sleep for {}sec, see you later".format(int(sleep_ms/1000)))
+    log.info("sleep for {} sec, see you later".format(int(sleep_ms/1000)))
         
     display.fill(0)
     display.show()
@@ -237,33 +210,16 @@ def gotoSleep(display):
 
 
 
-
-def new(display,lora):
-
-    """
-    debug = Pin(39, mode = Pin.IN)
-    logging.basicConfig(level=logging.INFO)
-    if debug.value(): 
-        logging.basicConfig(level=logging.DEBUG)
-    """
-
-    #log.info("info - test")
-    #log.debug("debug - test")
-
-    display.text('Lora Sender', 0, 0) # Text, X, Y
-    display.show()
+def send(display,lora):
+    while True:
+        display.text('Lora Sender', 0, 0) # Text, X, Y
+        display.show()
     
-    ledPIN.off()
-    mosfetPIN.on()
+        outDriverPIN.on()
+        sleep(2)
+        process(display,lora)
+        sleep(2)
+        outDriverPIN.off()
 
-    sleep(2)
-
-    process(display,lora)
-
-    sleep(2)
-
-    ledPIN.off()
-    mosfetPIN.off()
-
-    gotoSleep(display)
+        gotoSleep(display)
 

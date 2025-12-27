@@ -3,14 +3,19 @@ import machine
 from machine import Pin, SoftSPI, SoftI2C
 from machine import deepsleep, wake_reason, reset_cause
 from ssd1306 import SSD1306_I2C
-from sx127x import SX127x
+from lib import sx127x
 
-from examples import LoRaSender
-from examples import _LoRaReceiver
-from examples import _LoRaPing
-from examples import _LoRaReceiverCallback
+import LoRaSender
+#from examples import _LoRaReceiver
+#from examples import _LoRaPing
+#from examples import _LoRaReceiverCallback
 
-import logging
+from lib import logging
+"""
+Gpio 34-39 are input only no pullups/pulldowns
+Pin 39 enable Debug
+Pin 34 Wakeup
+"""
 
 
 """
@@ -70,17 +75,20 @@ type = 'sender'
 
 log = logging.getLogger(__name__)
 
+#global debug
+
 if __name__ == '__main__':
 
-    wakeupPIN = Pin(34, mode = Pin.IN)
-    esp32.wake_on_ext0(pin = wakeupPIN, level = esp32.WAKEUP_ANY_HIGH)
+    wakeupPIN = Pin(34, mode=Pin.IN)
+    esp32.wake_on_ext0(pin=wakeupPIN, level=esp32.WAKEUP_ANY_HIGH)
 
-    debug = Pin(39, mode = Pin.IN)
+    debug = Pin(36, mode = Pin.IN)
     #logging.basicConfig(level=logging.INFO)
     log.setLevel(logging.INFO)
-    if debug.value(): 
+    if debug.value():
+        print("*** ", end='') 
         log.setLevel(logging.DEBUG)
-        #logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.DEBUG)
         log.debug("DEBUG mode!!!")
 
     # check if the device woke from a deep sleep
@@ -96,10 +104,10 @@ if __name__ == '__main__':
     display = SSD1306_I2C(oled_width, oled_height, i2c)
 
     log.debug("SX127x initialisieren")
-    lora = SX127x(lora_spi, pins=lora_pins, parameters=lora_default)
+    lora = sx127x.SX127x(lora_spi, pins=lora_pins, parameters=lora_default)
 
     if type == 'sender':
-        LoRaSender.new(display, lora)
+        LoRaSender.send(display, lora)
     """
     if type == 'receiver':
         LoRaReceiver.receive(lora)
@@ -117,3 +125,5 @@ if __name__ == '__main__':
     # this code will drop to a REPL. Place machine.reset() in a finally
     # block to always reset, instead.
     machine.reset()    
+
+
